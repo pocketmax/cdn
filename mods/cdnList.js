@@ -1,30 +1,52 @@
 define(function(){
 
     return [{
-        //sencha
-        regex: /-/,
-        cb: function(bla, foo, bar){
+        //sencha - touch
+        regex: /^(sencha)-(touch)-((\.|\d)+)-commercial.zip/,
+        cb: function(vend, prod, ver){
             return {
-                vendor: 'sencha',
-                product: 'cmd',
-                ver: '2.3'
+                vendor: vend,
+                product: prod,
+                ver: ver
+            };
+        }
+    },{
+        //sencha - touch
+        regex: /^(touch)-((\.|\d)+)-commercial.zip/,
+        vendor: 'sencha',
+        cb: function(vend, ver){
+            return {
+                vendor: vend,
+                ver: ver
             };
         }
     },{
         //angular
-        regex: /-/,
-        vendor: 0,
-        product: 1,
-        cb: function() {
+        regex: /^(angular)-((\.|\d)+).zip/,
+        cb: function(vend, ver) {
             return {
-                ver: '2.3'
+                vendor: vend,
+                ver: ver
             };
         }
     },{
         //jquery
-        regex: /-/,
-        cb: function() {
-
+        regex: /^(jquery)-((\.|\d)+).js/,
+        cb: function(vend, ver) {
+            return {
+                vendor: vend,
+                ver: ver
+            };
+        }
+    },{
+        //jquery min
+        regex: /^(jquery)-((\.|\d)+).min.js/,
+        cb: function(vend, ver) {
+            return {
+                vendor: vend,
+                ver: ver,
+                minified: true
+            };
         }
     }];
 
