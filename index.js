@@ -3,6 +3,7 @@ var fs = require('fs');
 var _ = require('lodash');
 var app = express();
 var req = require('requirejs');
+var mime = require('mime');
 
 req.config({
     baseUrl: 'mods',
@@ -12,8 +13,8 @@ req.config({
 
 //returns finalized cdn data entry
 
-
-var fileList = fs.readdirSync('./files');
+var basePath = './files';
+var fileList = fs.readdirSync(basePath);
 var cdnList = req('cdnList');
 var fetchConfig = req('fetchConfig');
 
@@ -31,7 +32,9 @@ for(var i=0; i < cdnList.length; i++){
             var url = '/' + data.product + '/' + data.ver;
         }
         app.get(url, function (req, res) {
-            res.send('downloading ' + fileName);
+            res.setHeader('Content-disposition', 'attachment; filename=' + fileName);
+            var filestream = fs.createReadStream(basePath + '/' + fileName);
+            filestream.pipe(res);
         });
 
     });
